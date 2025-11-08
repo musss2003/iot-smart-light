@@ -1,19 +1,12 @@
-# 💡 Smart Light – Raspberry Pi IoT Project
+# Smart Light - Wi-Fi Controlled LED
 
-## 🧠 Overview
-**Smart Light** is an IoT project that demonstrates how to control an LED remotely over Wi-Fi using a **Raspberry Pi**.  
-By hosting a simple **web server** on the Raspberry Pi, users can toggle the LED **ON**, **OFF**, or make it **BLINK** directly from any smartphone or computer connected to the same network.
-
-This project integrates **web development (PHP)**, **hardware control (Python + GPIO)**, and **basic networking** concepts.
+Control an LED connected to a Raspberry Pi over Wi-Fi from your smartphone or laptop.
 
 ---
 
-## ⚙️ Features
-- 💡 **Turn LED ON** – instantly light up the LED via a web interface  
-- 🌑 **Turn LED OFF** – switch off the LED remotely  
-- ⚡ **Blink Mode** – continuously blink the LED (0.5 s ON / 0.5 s OFF)  
-- 🌐 **Wi-Fi Control** – access the interface from any device on the same network  
-- 📡 *(Optional Bonus)*: Raspberry Pi broadcasts its own Wi-Fi hotspot for direct control  
+## 🔹 Project Overview
+
+This project demonstrates a simple IoT-style smart light system using a Raspberry Pi. A web interface allows you to **turn an LED ON, OFF, or make it BLINK** remotely. The Raspberry Pi can be accessed both **locally** over your Wi-Fi network and **remotely** using [Remote.It](https://remote.it/).
 
 ---
 
@@ -40,3 +33,128 @@ This project integrates **web development (PHP)**, **hardware control (Python + 
 > Always use a **resistor** to avoid burning the LED or damaging your GPIO.
 
 ---
+
+## 🧩 Wiring
+
+1. Connect the **long leg (anode)** of the LED to a GPIO pin on Raspberry Pi (example: GPIO 17).  
+2. Connect the **short leg (cathode)** of the LED to one end of a 150Ω resistor.  
+3. Connect the other end of the resistor to a **GND pin** on the Raspberry Pi. 
+
+
+> ⚠️ Always check LED polarity: anode = positive, cathode = negative.
+
+---
+
+## 🛠️ Software Setup
+
+### 1. Raspberry Pi OS Setup
+
+1. Flash Raspberry Pi OS onto SD card.  
+2. Enable SSH: create an empty file named `ssh` in the boot partition.  
+3. Configure Wi-Fi by editing `wpa_supplicant.conf` in the boot partition:
+   ```text
+   country=BA
+   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+   update_config=1
+
+   network={
+       ssid="###"
+       psk="#########"
+   }
+
+
+4. Insert SD card, power on Raspberry Pi, and find its IP on your network (`nmap` or router admin page).
+
+---
+
+### 2. Remote Access (Optional)
+
+We used **Remote.It** to allow remote access outside your local network:
+
+1. Create a Remote.It account at [https://app.remote.it](https://app.remote.it).
+2. Install Remote.It agent on the Pi:
+
+   ```bash
+   curl -L https://downloads.remote.it/remoteit/install_agent.sh | sh
+   ```
+3. Register the Pi in your account.
+4. Add services: **SSH (port 22)** and **HTTP (port 80)**.
+5. Remote.It provides a hostname and port to connect from anywhere.
+
+---
+
+### 3. Install Required Software
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install apache2 php libapache2-mod-php python3-rpi.gpio git -y
+```
+
+#### 🤔 Technologies for achieving the project goals are under consideration and will be finalized during planning.
+
+---
+
+## 🔗 Git Integration
+
+* Clone the repository to your Pi or local machine:
+
+```bash
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
+```
+
+* Pull latest updates:
+
+```bash
+git pull origin main
+```
+
+* Commit changes:
+
+```bash
+git add .
+git commit -m "Your message"
+git push origin main
+```
+
+> This allows team collaboration and distributing the project to multiple Raspberry Pis.
+
+---
+
+## ✅ What’s Implemented
+
+* Headless Raspberry Pi setup with Wi-Fi and SSH.
+* Remote access via Remote.It.
+* Apache + PHP web server.
+* Git integration for project version control.
+
+---
+
+## 🌟 Future Improvements / Ideas
+
+* Add multiple LEDs or RGB LEDs and allow color control.
+* Add authentication to the web interface for security.
+* Implement smartphone app instead of PHP webpage.
+* Add scheduling (turn on/off at specific times).
+* Use WebSocket for real-time LED status updates.
+* Add MQTT support to integrate with home automation platforms.
+
+---
+
+## 📄 References
+
+* [RPi.GPIO Python library](https://pypi.org/project/RPi.GPIO/)
+* [Remote.It Documentation](https://docs.remote.it/)
+* [Raspberry Pi OS Setup Guide](https://www.raspberrypi.com/software/)
+
+---
+
+## 👥 Authors
+- **Riad Elezovic**  
+- **Kerim Kapetanovic**  
+- **Amar Dizdarevic**  
+- **Mustafa Sinanovic**  
+
+## 📅 Project Start Date
+**5 November 2025**
+
