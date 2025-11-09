@@ -1,9 +1,20 @@
-import RPi.GPIO as GPIO
+import lgpio
 import time
 
+# Define LED pin (GPIO17 for example)
 LED_PIN = 17
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(LED_PIN, GPIO.OUT)
+# Open GPIO chip
+h = lgpio.gpiochip_open(0)
 
-GPIO.output(LED_PIN, GPIO.HIGH)  # Turn ON LED
+# Set LED pin as output
+lgpio.gpio_claim_output(h, LED_PIN)
+
+# Turn LED ON
+lgpio.gpio_write(h, LED_PIN, 1)
+
+# Keep it on for 2 seconds (optional)
+time.sleep(2)
+
+# Close chip
+lgpio.gpiochip_close(h)

@@ -1,8 +1,7 @@
-import RPi.GPIO as GPIO
+import lgpio
 
 LED_PIN = 17
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(LED_PIN, GPIO.OUT)
-
-GPIO.output(LED_PIN, GPIO.LOW)  # Turn OFF LED
+h = lgpio.gpiochip_open(0)
+lgpio.gpio_claim_output(h, LED_PIN)
+lgpio.gpio_write(h, LED_PIN, 0)
+lgpio.gpiochip_close(h)

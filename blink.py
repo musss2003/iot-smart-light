@@ -1,16 +1,15 @@
-import RPi.GPIO as GPIO
+import lgpio
 import time
 
 LED_PIN = 17
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(LED_PIN, GPIO.OUT)
+h = lgpio.gpiochip_open(0)
+lgpio.gpio_claim_output(h, LED_PIN)
 
 try:
     while True:
-        GPIO.output(LED_PIN, GPIO.HIGH)
+        lgpio.gpio_write(h, LED_PIN, 1)
         time.sleep(0.5)
-        GPIO.output(LED_PIN, GPIO.LOW)
+        lgpio.gpio_write(h, LED_PIN, 0)
         time.sleep(0.5)
 except KeyboardInterrupt:
-    GPIO.cleanup()
+    lgpio.gpiochip_close(h)
